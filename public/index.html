@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopSphere | Shopping Website</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const LoginCard = ({ title, description, actionLabel, helperText, helperLink, role }) => {
+      const [status, setStatus] = React.useState("");
+      const [isLoading, setIsLoading] = React.useState(false);
+
+      const handleSubmit = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const email = formData.get("email");
+        const password = formData.get("password");
+
+        setIsLoading(true);
+        setStatus("");
+
+        try {
+          const response = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password, role }),
+          });
+
+          const payload = await response.json();
+          setStatus(payload.message || "Signed in.");
+        } catch (error) {
+          setStatus("Unable to reach the server. Please try again.");
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      return (
+        <div className={`login-card ${role === "user" ? "alt" : ""}`}>
+          <h2>{title}</h2>
+          <p>{description}</p>
+          <form onSubmit={handleSubmit}>
+            <label>
+              Email
+              <input
+                name="email"
+                type="email"
+                placeholder={role === "admin" ? "admin@shopsphere.com" : "you@email.com"}
+                required
+              />
+            </label>
+            <label>
+              Password
+              <input name="password" type="password" placeholder="Enter your password" required />
+            </label>
+            <button className="cta full" type="submit" disabled={isLoading}>
+              {isLoading ? "Signing in..." : actionLabel}
+            </button>
+            <span className="helper">
+              {helperText} <a href="#">{helperLink}</a>
+            </span>
+            {status && <span className="status">{status}</span>}
+          </form>
+        </div>
+      );
+    };
+
+    const App = () => (
+      <>
+        <header className="site-header">
+          <div className="brand">
+            <span className="logo">🛍️</span>
+            <div>
+              <h1>ShopSphere</h1>
+              <p>Shop everything you love, fast and secure.</p>
+            </div>
+          </div>
+          <nav>
+            <a href="#collections">Collections</a>
+            <a href="#benefits">Benefits</a>
+            <a href="#logins">Login</a>
+            <button className="cta">Start Shopping</button>
+          </nav>
+        </header>
+
+        <main>
+          <section className="hero">
+            <div className="hero-copy">
+              <span className="pill">New season arrivals</span>
+              <h2>Design your next shopping experience.</h2>
+              <p>
+                Discover curated collections, fast checkout, and personalized recommendations for every
+                shopper. Built for customers and admins alike.
+              </p>
+              <div className="hero-actions">
+                <button className="cta">Browse Products</button>
+                <button className="ghost">Learn More</button>
+              </div>
+              <div className="stats">
+                <div>
+                  <strong>40K+</strong>
+                  <span>Active shoppers</span>
+                </div>
+                <div>
+                  <strong>2.5K</strong>
+                  <span>Verified sellers</span>
+                </div>
+                <div>
+                  <strong>24/7</strong>
+                  <span>Support</span>
+                </div>
+              </div>
+            </div>
+            <div className="hero-card">
+              <h3>Trending bundles</h3>
+              <ul>
+                <li>
+                  <span>Smart home starter kit</span>
+                  <strong>$249</strong>
+                </li>
+                <li>
+                  <span>Eco essentials</span>
+                  <strong>$89</strong>
+                </li>
+                <li>
+                  <span>Streetwear favorites</span>
+                  <strong>$129</strong>
+                </li>
+              </ul>
+              <button className="cta full">View all bundles</button>
+            </div>
+          </section>
+
+          <section id="collections" className="collections">
+            <h2>Collections for every shopper</h2>
+            <p>Curated experiences that scale from indie stores to multi-brand marketplaces.</p>
+            <div className="collection-grid">
+              <article>
+                <h3>Fashion & Lifestyle</h3>
+                <p>Drop-based merchandising, style boards, and influencer-ready lookbooks.</p>
+              </article>
+              <article>
+                <h3>Tech & Gadgets</h3>
+                <p>Warranty management, device protection, and real-time inventory alerts.</p>
+              </article>
+              <article>
+                <h3>Home & Living</h3>
+                <p>Room bundles, AR previews, and guided decor inspirations.</p>
+              </article>
+              <article>
+                <h3>Beauty & Wellness</h3>
+                <p>Subscription plans, refill reminders, and ingredient transparency.</p>
+              </article>
+            </div>
+          </section>
+
+          <section id="benefits" className="benefits">
+            <div>
+              <h2>Why teams choose ShopSphere</h2>
+              <ul>
+                <li>Unified dashboard for orders, inventory, and customer insights.</li>
+                <li>Secure payments with fraud monitoring and instant payouts.</li>
+                <li>Automations for refunds, notifications, and loyalty rewards.</li>
+              </ul>
+            </div>
+            <div className="benefit-card">
+              <h3>Operational highlights</h3>
+              <div className="tag">Admin ready</div>
+              <p>Assign roles, approve new products, and track KPIs with real-time reporting.</p>
+              <div className="tag">Customer first</div>
+              <p>Saved carts, multi-address checkout, and smart recommendations.</p>
+            </div>
+          </section>
+
+          <section id="logins" className="logins">
+            <LoginCard
+              title="Admin Login"
+              description="Manage products, orders, and storefront analytics."
+              actionLabel="Sign in as Admin"
+              helperText="Need access?"
+              helperLink="Request admin invite"
+              role="admin"
+            />
+            <LoginCard
+              title="User Login"
+              description="Track your orders, manage wishlists, and redeem rewards."
+              actionLabel="Sign in as User"
+              helperText="New here?"
+              helperLink="Create an account"
+              role="user"
+            />
+          </section>
+        </main>
+
+        <footer>
+          <div>
+            <h3>ShopSphere</h3>
+            <p>Built for modern shopping experiences with secure admin and user access.</p>
+          </div>
+          <div className="footer-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Support</a>
+          </div>
+        </footer>
+      </>
+    );
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>
