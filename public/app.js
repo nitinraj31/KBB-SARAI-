@@ -14,6 +14,14 @@ const fallbackCatalog = {
     "Appliances",
     "Furniture",
     "Travel",
+    "Wellness",
+    "Kids",
+    "Gaming",
+    "Pet Care",
+    "Stationery",
+    "Footwear",
+    "Accessories",
+    "Outdoor",
   ],
   promos: [
     {
@@ -30,6 +38,16 @@ const fallbackCatalog = {
       title: "Home Refresh",
       subtitle: "Upgrade every corner",
       cta: "See home deals",
+    },
+    {
+      title: "Green Living Picks",
+      subtitle: "Sustainable home essentials under $49",
+      cta: "Go eco",
+    },
+    {
+      title: "Weekend Sports Gear",
+      subtitle: "Bundle offers for outdoor lovers",
+      cta: "Gear up",
     },
   ],
   products: [
@@ -97,6 +115,70 @@ const fallbackCatalog = {
       badge: "Pick",
       tag: "Lifetime care",
     },
+    {
+      id: 9,
+      name: "PulseFit Smartwatch",
+      price: "$149",
+      rating: 4.6,
+      badge: "New",
+      tag: "Health tracking",
+    },
+    {
+      id: 10,
+      name: "AuraGlow Desk Lamp",
+      price: "$59",
+      rating: 4.4,
+      badge: "Deal",
+      tag: "Smart dimming",
+    },
+    {
+      id: 11,
+      name: "EcoFresh Grocery Box",
+      price: "$39",
+      rating: 4.3,
+      badge: "Save",
+      tag: "Weekly subscription",
+    },
+    {
+      id: 12,
+      name: "TrailBlaze Backpack",
+      price: "$99",
+      rating: 4.5,
+      badge: "Top",
+      tag: "Weatherproof",
+    },
+    {
+      id: 13,
+      name: "ZenMist Aroma Diffuser",
+      price: "$69",
+      rating: 4.7,
+      badge: "Calm",
+      tag: "Essential oils",
+    },
+    {
+      id: 14,
+      name: "FlexiCook Air Fryer",
+      price: "$129",
+      rating: 4.6,
+      badge: "Hot",
+      tag: "Smart presets",
+    },
+    {
+      id: 15,
+      name: "LunaSoft Bedding Set",
+      price: "$119",
+      rating: 4.8,
+      badge: "Best",
+      tag: "Cooling fabric",
+    },
+    {
+      id: 16,
+      name: "Vertex Gaming Chair",
+      price: "$229",
+      rating: 4.5,
+      badge: "Pick",
+      tag: "Ergonomic",
+    },
   ],
   brands: [
     "Lumen",
@@ -107,6 +189,10 @@ const fallbackCatalog = {
     "Zephyr",
     "Vista",
     "Orbit",
+    "Halo",
+    "Maven",
+    "Ridge",
+    "Opal",
   ],
   services: [
     "Same-day delivery",
@@ -115,6 +201,8 @@ const fallbackCatalog = {
     "Smart recommendations",
     "Secure payments",
     "Installment plans",
+    "Gift wrapping",
+    "Instant chat support",
   ],
   insights: [
     {
@@ -146,6 +234,10 @@ const fallbackCatalog = {
       title: "Wellness reset",
       desc: "Home gym, supplements, and recovery tools.",
     },
+    {
+      title: "Pet-friendly picks",
+      desc: "Comfort items and smart tech for furry friends.",
+    },
   ],
   faqs: [
     {
@@ -160,6 +252,27 @@ const fallbackCatalog = {
       q: "Do you support EMI?",
       a: "Flexible EMI plans are available on selected categories with zero-cost options.",
     },
+    {
+      q: "How do I become a seller?",
+      a: "Apply in the Seller Hub and complete verification in under 48 hours.",
+    },
+  ],
+  badges: [
+    "ISO-certified logistics",
+    "24/7 fraud monitoring",
+    "Trusted by 2,500+ sellers",
+    "4.8 average rating",
+  ],
+  timeline: [
+    { title: "Order placed", note: "Instant confirmation and payment verification." },
+    { title: "Seller dispatch", note: "Packed within 4 hours with secure seal." },
+    { title: "On the move", note: "Live tracking across 15+ courier partners." },
+    { title: "Delivered", note: "OTP-secured delivery with feedback prompts." },
+  ],
+  appStats: [
+    { label: "App downloads", value: "12M+" },
+    { label: "Daily active users", value: "640K" },
+    { label: "Avg. basket size", value: "$74" },
   ],
 };
 
@@ -292,6 +405,12 @@ const App = () => {
           </div>
         </section>
 
+        <section className="trust-strip">
+          {catalog.badges.map((badge) => (
+            <span key={badge}>{badge}</span>
+          ))}
+        </section>
+
         <section className="hero">
           <div className="hero-copy">
             <span className="pill">Marketplace 2.0</span>
@@ -412,6 +531,21 @@ const App = () => {
           </div>
         </section>
 
+        <section className="delivery-timeline">
+          <div>
+            <h2>Delivery, simplified</h2>
+            <p>From checkout to doorstep, every milestone is transparent.</p>
+          </div>
+          <div className="timeline-grid">
+            {catalog.timeline.map((step) => (
+              <article key={step.title}>
+                <h3>{step.title}</h3>
+                <p>{step.note}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <section className="testimonial-grid">
           <div>
             <h2>What shoppers love</h2>
@@ -452,6 +586,28 @@ const App = () => {
             <p>Saved carts, multi-address checkout, and smart recommendations.</p>
             <div className="tag">Seller tools</div>
             <p>Dedicated seller analytics, catalog syncing, and inventory forecasting.</p>
+          </div>
+        </section>
+
+        <section className="app-callout">
+          <div>
+            <h2>ShopSphere App</h2>
+            <p>
+              Scan, compare, and buy on the go. Exclusive app-only drops every weekend.
+            </p>
+            <div className="app-stats">
+              {catalog.appStats.map((stat) => (
+                <div key={stat.label}>
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="app-card">
+            <h3>Fast checkout</h3>
+            <p>Save addresses, track orders, and manage returns instantly.</p>
+            <button className="cta small">Get the app</button>
           </div>
         </section>
 
