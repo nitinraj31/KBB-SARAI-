@@ -137,6 +137,44 @@ main {
   padding: 0 6vw 120px;
 }
 
+.home-hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  align-items: center;
+  background: linear-gradient(140deg, rgba(76, 63, 242, 0.1), rgba(245, 179, 1, 0.12));
+  border-radius: 28px;
+  padding: 36px;
+  box-shadow: var(--shadow-soft);
+}
+
+.hero-message h2 {
+  font-size: clamp(28px, 3.6vw, 44px);
+  margin: 14px 0;
+}
+
+.hero-message p {
+  color: var(--muted);
+}
+
+.hero-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.hero-mini-card {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 8px;
+}
+
+.hero-mini-card.accent {
+  border: 1px solid rgba(76, 63, 242, 0.25);
+}
+
 .category-strip {
   display: flex;
   gap: 12px;
@@ -301,6 +339,31 @@ main {
 .products {
   display: grid;
   gap: 32px;
+}
+
+.testimonial-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.testimonial-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.testimonial-cards article {
+  background: var(--card);
+  padding: 22px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 12px;
+}
+
+.testimonial-cards strong {
+  font-size: 14px;
+  color: var(--muted);
 }
 
 .filters {
@@ -497,6 +560,28 @@ input {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 24px;
+}
+
+.newsletter {
+  background: var(--card);
+  padding: 32px;
+  border-radius: 22px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 20px;
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.newsletter-form input {
+  flex: 1;
+  min-width: 220px;
 }
 
 .cta-banner {

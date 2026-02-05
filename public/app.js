@@ -263,6 +263,35 @@ const App = () => {
       </section>
 
       <main>
+        <section className="home-hero">
+          <div className="hero-message">
+            <span className="pill">Home of smart shopping</span>
+            <h2>Everything you need for a premium storefront, all in one place.</h2>
+            <p>
+              ShopSphere brings together curated catalogs, fast fulfillment, and flexible admin
+              controls so you can run a multi-brand marketplace with confidence.
+            </p>
+            <div className="hero-actions">
+              <button className="cta">Start shopping</button>
+              <button className="ghost">View live demo</button>
+            </div>
+          </div>
+          <div className="hero-stack">
+            <div className="hero-mini-card">
+              <h3>Instant deals</h3>
+              <p>Limited-time drops and smart coupons for every category.</p>
+            </div>
+            <div className="hero-mini-card accent">
+              <h3>Trusted delivery</h3>
+              <p>Live shipment tracking with 24/7 support coverage.</p>
+            </div>
+            <div className="hero-mini-card">
+              <h3>Admin analytics</h3>
+              <p>Real-time performance dashboards for every seller.</p>
+            </div>
+          </div>
+        </section>
+
         <section className="hero">
           <div className="hero-copy">
             <span className="pill">Marketplace 2.0</span>
@@ -380,6 +409,27 @@ const App = () => {
                 <button className="cta small">Add to cart</button>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className="testimonial-grid">
+          <div>
+            <h2>What shoppers love</h2>
+            <p>Real stories from buyers, admins, and brand partners.</p>
+          </div>
+          <div className="testimonial-cards">
+            <article>
+              <p>“The personalization tools make our daily drops feel premium.”</p>
+              <strong>Priya · Fashion lead</strong>
+            </article>
+            <article>
+              <p>“Support tickets dropped 40% after switching to ShopSphere.”</p>
+              <strong>Alex · Support manager</strong>
+            </article>
+            <article>
+              <p>“Inventory alerts and dashboards keep us ahead of demand.”</p>
+              <strong>Ravi · Operations</strong>
+            </article>
           </div>
         </section>
 
@@ -517,6 +567,17 @@ const App = () => {
               </article>
             ))}
           </div>
+        </section>
+
+        <section className="newsletter">
+          <div>
+            <h2>Get weekly drops and admin insights</h2>
+            <p>Subscribe for exclusive deals, seller tips, and marketplace updates.</p>
+          </div>
+          <form className="newsletter-form">
+            <input type="email" placeholder="Enter your email" required />
+            <button className="cta" type="submit">Subscribe</button>
+          </form>
         </section>
 
         <section className="cta-banner">
