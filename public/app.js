@@ -281,6 +281,9 @@ const App = () => {
   const [userStatus, setUserStatus] = useState("");
   const [catalog, setCatalog] = useState(fallbackCatalog);
   const [searchValue, setSearchValue] = useState("");
+  const [cartCount, setCartCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
+  const [deliveryStatus, setDeliveryStatus] = useState("");
 
   useEffect(() => {
     const fetchCatalog = async () => {
@@ -337,6 +340,25 @@ const App = () => {
     }
   };
 
+  const handleAddToCart = () => {
+    setCartCount((count) => count + 1);
+  };
+
+  const handleWishlist = () => {
+    setWishlistCount((count) => count + 1);
+  };
+
+  const handleEstimate = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const pincode = formData.get("pincode");
+    if (!pincode) {
+      setDeliveryStatus("Enter a valid pin code.");
+      return;
+    }
+    setDeliveryStatus(`Estimated delivery: 2-4 days for ${pincode}.`);
+  };
+
   return (
     <>
       <header className="site-header">
@@ -364,7 +386,13 @@ const App = () => {
             <a href="#logins">Login</a>
           </nav>
         </div>
-        <button className="cta outline">Start Shopping</button>
+        <div className="header-actions">
+          <div className="header-badges">
+            <span>Cart · {cartCount}</span>
+            <span>Wishlist · {wishlistCount}</span>
+          </div>
+          <button className="cta outline">Start Shopping</button>
+        </div>
       </header>
 
       <section className="category-strip">
@@ -403,6 +431,15 @@ const App = () => {
               <p>Real-time performance dashboards for every seller.</p>
             </div>
           </div>
+        </section>
+
+        <section className="quick-stats">
+          {catalog.appStats.map((stat) => (
+            <article key={stat.label}>
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
+            </article>
+          ))}
         </section>
 
         <section className="trust-strip">
@@ -525,10 +562,29 @@ const App = () => {
                   <span>⭐ {product.rating}</span>
                   <span>{product.tag}</span>
                 </div>
-                <button className="cta small">Add to cart</button>
+                <div className="product-actions">
+                  <button className="cta small" type="button" onClick={handleAddToCart}>
+                    Add to cart
+                  </button>
+                  <button className="ghost small" type="button" onClick={handleWishlist}>
+                    Save
+                  </button>
+                </div>
               </article>
             ))}
           </div>
+        </section>
+
+        <section className="delivery-estimator">
+          <div>
+            <h2>Check delivery speed</h2>
+            <p>Enter your pin code to see estimated delivery windows.</p>
+          </div>
+          <form className="estimator-form" onSubmit={handleEstimate}>
+            <input name="pincode" type="text" placeholder="Enter pin code" />
+            <button className="cta" type="submit">Estimate</button>
+          </form>
+          {deliveryStatus ? <span className="helper">{deliveryStatus}</span> : null}
         </section>
 
         <section className="delivery-timeline">
@@ -609,6 +665,16 @@ const App = () => {
             <p>Save addresses, track orders, and manage returns instantly.</p>
             <button className="cta small">Get the app</button>
           </div>
+        </section>
+
+        <section className="spotlight-grid">
+          {catalog.promos.map((promo) => (
+            <article key={promo.title}>
+              <h3>{promo.title}</h3>
+              <p>{promo.subtitle}</p>
+              <button className="ghost small">{promo.cta}</button>
+            </article>
+          ))}
         </section>
 
         <section className="brand-strip">

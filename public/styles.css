@@ -61,6 +61,26 @@ button {
   gap: 16px;
 }
 
+.header-actions {
+  display: grid;
+  gap: 12px;
+  justify-items: end;
+}
+
+.header-badges {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.header-badges span {
+  background: var(--card);
+  padding: 6px 12px;
+  border-radius: 999px;
+  box-shadow: var(--shadow-soft);
+}
+
 .search-bar {
   display: flex;
   gap: 12px;
@@ -130,6 +150,11 @@ button {
   font-weight: 600;
 }
 
+.ghost.small {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -146,6 +171,30 @@ main {
   border-radius: 28px;
   padding: 36px;
   box-shadow: var(--shadow-soft);
+}
+
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.quick-stats article {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 6px;
+}
+
+.quick-stats strong {
+  font-size: 20px;
+}
+
+.quick-stats span {
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .hero-message h2 {
@@ -355,6 +404,26 @@ main {
   gap: 32px;
 }
 
+.delivery-estimator {
+  background: var(--card);
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 12px;
+}
+
+.estimator-form {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.estimator-form input {
+  flex: 1;
+  min-width: 200px;
+}
+
 .delivery-timeline {
   display: grid;
   gap: 24px;
@@ -422,6 +491,12 @@ main {
   position: relative;
   display: grid;
   gap: 12px;
+}
+
+.product-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .product-badge {
@@ -510,6 +585,21 @@ main {
   padding: 26px;
   border-radius: 20px;
   box-shadow: var(--shadow);
+  display: grid;
+  gap: 12px;
+}
+
+.spotlight-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.spotlight-grid article {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: var(--shadow-soft);
   display: grid;
   gap: 12px;
 }
