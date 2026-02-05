@@ -16,11 +16,148 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", userSchema);
 
+const catalog = {
+  categories: [
+    "Mobiles",
+    "Fashion",
+    "Electronics",
+    "Home",
+    "Beauty",
+    "Sports",
+    "Grocery",
+    "Books",
+    "Toys",
+    "Appliances",
+    "Furniture",
+    "Travel",
+  ],
+  promos: [
+    {
+      title: "Mega Electronics Week",
+      subtitle: "Up to 60% off + instant bank offers",
+      cta: "Shop electronics",
+    },
+    {
+      title: "Style Studio",
+      subtitle: "Fresh fits curated daily",
+      cta: "Explore fashion",
+    },
+    {
+      title: "Home Refresh",
+      subtitle: "Upgrade every corner",
+      cta: "See home deals",
+    },
+  ],
+  products: [
+    {
+      id: 1,
+      name: "Nova X1 5G Phone",
+      price: "$499",
+      rating: 4.7,
+      badge: "Hot",
+      tag: "Free delivery",
+    },
+    {
+      id: 2,
+      name: "Aurora Noise Cancelling Headphones",
+      price: "$199",
+      rating: 4.6,
+      badge: "New",
+      tag: "2-year warranty",
+    },
+    {
+      id: 3,
+      name: "CloudSoft Sofa",
+      price: "$899",
+      rating: 4.4,
+      badge: "Top",
+      tag: "Easy EMI",
+    },
+    {
+      id: 4,
+      name: "Athletica Running Shoes",
+      price: "$129",
+      rating: 4.5,
+      badge: "Trending",
+      tag: "Extra 10% off",
+    },
+    {
+      id: 5,
+      name: "ChefPro Blender",
+      price: "$149",
+      rating: 4.2,
+      badge: "Deal",
+      tag: "Kitchen favorite",
+    },
+    {
+      id: 6,
+      name: "GlowSkin Care Set",
+      price: "$89",
+      rating: 4.8,
+      badge: "Best",
+      tag: "Derm-approved",
+    },
+    {
+      id: 7,
+      name: "SmartAir Purifier",
+      price: "$259",
+      rating: 4.3,
+      badge: "Eco",
+      tag: "Low noise",
+    },
+    {
+      id: 8,
+      name: "Voyager Cabin Bag",
+      price: "$179",
+      rating: 4.5,
+      badge: "Pick",
+      tag: "Lifetime care",
+    },
+  ],
+  brands: ["Lumen", "Apex", "Everlane", "Viora", "Nordic", "Zephyr", "Vista", "Orbit"],
+  services: [
+    "Same-day delivery",
+    "30-day returns",
+    "Verified sellers",
+    "Smart recommendations",
+    "Secure payments",
+    "Installment plans",
+  ],
+  insights: [
+    { label: "Orders processed", value: "1.2M", note: "Last 30 days" },
+    { label: "Avg. delivery time", value: "28 hrs", note: "Metro cities" },
+    { label: "Customer satisfaction", value: "4.8/5", note: "Live ratings" },
+  ],
+  stories: [
+    { title: "Campus essentials", desc: "Backpacks, notebooks, and smart gear for students." },
+    { title: "Weekend getaway", desc: "Travel kits, wearables, and compact luggage." },
+    { title: "Wellness reset", desc: "Home gym, supplements, and recovery tools." },
+  ],
+  faqs: [
+    {
+      q: "How do refunds work?",
+      a: "Refunds are initiated instantly after pickup and settled within 3-5 business days.",
+    },
+    {
+      q: "Can sellers manage inventory?",
+      a: "Yes. Admins can onboard sellers with role-based inventory dashboards.",
+    },
+    {
+      q: "Do you support EMI?",
+      a: "Flexible EMI plans are available on selected categories with zero-cost options.",
+    },
+  ],
+};
+
 app.use(express.json());
 app.use(express.static("public"));
 
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", uptime: process.uptime() });
+});
+
+app.get("/api/catalog", (_req, res) => {
+  res.json(catalog);
 });
 
 const ensureDefaultUsers = async () => {
