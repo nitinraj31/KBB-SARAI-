@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ShopSphere | Shopping Website</title>
+  <title>AgriMarket | Agriculture Marketplace</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -100,41 +100,41 @@
 
     const App = () => {
       const categories = [
-        { name: "Electronics", image: "https://via.placeholder.com/150?text=Electronics" },
-        { name: "Fashion", image: "https://via.placeholder.com/150?text=Fashion" },
-        { name: "Home & Kitchen", image: "https://via.placeholder.com/150?text=Home" },
-        { name: "Books", image: "https://via.placeholder.com/150?text=Books" },
-        { name: "Sports", image: "https://via.placeholder.com/150?text=Sports" },
-        { name: "Beauty", image: "https://via.placeholder.com/150?text=Beauty" },
+        { name: "Seeds", image: "https://via.placeholder.com/150?text=Seeds" },
+        { name: "Fertilizers", image: "https://via.placeholder.com/150?text=Fertilizers" },
+        { name: "Tools", image: "https://via.placeholder.com/150?text=Tools" },
+        { name: "Machinery", image: "https://via.placeholder.com/150?text=Machinery" },
+        { name: "Produce", image: "https://via.placeholder.com/150?text=Produce" },
+        { name: "Livestock", image: "https://via.placeholder.com/150?text=Livestock" },
       ];
 
       const featuredProducts = [
-        { id: 1, name: "Wireless Headphones", price: 99, originalPrice: 129, discount: 23, rating: 4.5, reviews: 1200, image: "https://via.placeholder.com/200?text=Headphones" },
-        { id: 2, name: "Smartphone", price: 699, originalPrice: 799, discount: 13, rating: 4.7, reviews: 850, image: "https://via.placeholder.com/200?text=Phone" },
-        { id: 3, name: "Laptop", price: 1299, originalPrice: 1499, discount: 13, rating: 4.6, reviews: 650, image: "https://via.placeholder.com/200?text=Laptop" },
-        { id: 4, name: "Sneakers", price: 89, originalPrice: 119, discount: 25, rating: 4.3, reviews: 950, image: "https://via.placeholder.com/200?text=Sneakers" },
+        { id: 1, name: "John Deere Tractor", price: 25000, originalPrice: 28000, discount: 11, rating: 4.8, reviews: 450, image: "https://via.placeholder.com/200?text=Tractor" },
+        { id: 2, name: "Organic Seed Pack", price: 25, originalPrice: 35, discount: 29, rating: 4.6, reviews: 320, image: "https://via.placeholder.com/200?text=Seeds" },
+        { id: 3, name: "NPK Fertilizer 50kg", price: 45, originalPrice: 55, discount: 18, rating: 4.4, reviews: 280, image: "https://via.placeholder.com/200?text=Fertilizer" },
+        { id: 4, name: "Farm Tools Set", price: 120, originalPrice: 150, discount: 20, rating: 4.5, reviews: 190, image: "https://via.placeholder.com/200?text=Tools" },
       ];
 
       const deals = [
-        { id: 5, name: "Bluetooth Speaker", price: 49, originalPrice: 79, discount: 38, rating: 4.4, reviews: 600, image: "https://via.placeholder.com/200?text=Speaker" },
-        { id: 6, name: "Smart Watch", price: 199, originalPrice: 249, discount: 20, rating: 4.5, reviews: 750, image: "https://via.placeholder.com/200?text=Watch" },
-        { id: 7, name: "Gaming Mouse", price: 29, originalPrice: 39, discount: 26, rating: 4.2, reviews: 400, image: "https://via.placeholder.com/200?text=Mouse" },
-        { id: 8, name: "Tablet", price: 349, originalPrice: 449, discount: 22, rating: 4.6, reviews: 550, image: "https://via.placeholder.com/200?text=Tablet" },
+        { id: 5, name: "Irrigation System", price: 299, originalPrice: 399, discount: 25, rating: 4.3, reviews: 180, image: "https://via.placeholder.com/200?text=Irrigation" },
+        { id: 6, name: "Pesticide Spray", price: 35, originalPrice: 50, discount: 30, rating: 4.1, reviews: 220, image: "https://via.placeholder.com/200?text=Spray" },
+        { id: 7, name: "Harvesting Tools", price: 85, originalPrice: 110, discount: 23, rating: 4.4, reviews: 150, image: "https://via.placeholder.com/200?text=Harvest" },
+        { id: 8, name: "Greenhouse Kit", price: 450, originalPrice: 600, discount: 25, rating: 4.6, reviews: 90, image: "https://via.placeholder.com/200?text=Greenhouse" },
       ];
 
       return (
         <>
           <header className="site-header">
             <div className="brand">
-              <span className="logo">🛍️</span>
+              <span className="logo">🌾</span>
               <div>
-                <h1>ShopSphere</h1>
-                <p>Shop everything you love, fast and secure.</p>
+                <h1>AgriMarket</h1>
+                <p>Grow your farm with quality products and supplies.</p>
               </div>
             </div>
             <nav>
               <div className="search-bar">
-                <input type="text" placeholder="Search for products, brands and more..." />
+                <input type="text" placeholder="Search for seeds, tools, machinery and more..." />
               </div>
               <a href="#categories">Categories</a>
               <a href="#deals">Deals</a>
@@ -158,11 +158,11 @@
           <main>
             <section className="hero-banner">
               <div className="banner-content">
-                <h2>Big Billion Days Sale!</h2>
-                <p>Up to 70% off on electronics, fashion, and more.</p>
+                <h2>Harvest Season Sale!</h2>
+                <p>Up to 50% off on tractors, seeds, fertilizers, and farming equipment.</p>
                 <button className="cta">Shop Now</button>
               </div>
-              <img src="https://via.placeholder.com/800x300?text=Sale+Banner" alt="Sale Banner" />
+              <img src="https://via.placeholder.com/800x300?text=Harvest+Sale" alt="Harvest Sale Banner" />
             </section>
 
             <section id="categories" className="categories-section">
@@ -206,13 +206,13 @@
 
           <footer>
             <div>
-              <h3>ShopSphere</h3>
-              <p>India's leading e-commerce platform.</p>
+              <h3>AgriMarket</h3>
+              <p>Empowering farmers worldwide with quality products and supplies.</p>
             </div>
             <div className="footer-links">
               <a href="#">About Us</a>
               <a href="#">Careers</a>
-              <a href="#">Sell on ShopSphere</a>
+              <a href="#">Sell on AgriMarket</a>
               <a href="#">Help Center</a>
             </div>
           </footer>

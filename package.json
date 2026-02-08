@@ -1,5 +1,5 @@
 {
-  "name": "shopsphere",
+  "name": "agrimarket",
   "version": "1.0.0",
   "description": "Full-stack shopping website with admin and user login.",
   "main": "server.js",

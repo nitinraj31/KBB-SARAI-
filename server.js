@@ -31,5 +31,5 @@ app.post("/api/auth/login", (req, res) => {
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`ShopSphere server running on http://127.0.0.1:${PORT}`);
+  console.log(`AgriMarket server running on http://127.0.0.1:${PORT}`);
 });
