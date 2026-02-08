@@ -1,7 +1,7 @@
 {
   "name": "agrimarket",
   "version": "1.0.0",
-  "description": "Full-stack shopping website with admin and user login.",
+  "description": "Full-stack agriculture marketplace with admin and user login.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
