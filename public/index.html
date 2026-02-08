@@ -74,146 +74,151 @@
       );
     };
 
-    const App = () => (
-      <>
-        <header className="site-header">
-          <div className="brand">
-            <span className="logo">🛍️</span>
-            <div>
-              <h1>ShopSphere</h1>
-              <p>Shop everything you love, fast and secure.</p>
-            </div>
-          </div>
-          <nav>
-            <a href="#collections">Collections</a>
-            <a href="#benefits">Benefits</a>
-            <a href="#logins">Login</a>
-            <button className="cta">Start Shopping</button>
-          </nav>
-        </header>
-
-        <main>
-          <section className="hero">
-            <div className="hero-copy">
-              <span className="pill">New season arrivals</span>
-              <h2>Design your next shopping experience.</h2>
-              <p>
-                Discover curated collections, fast checkout, and personalized recommendations for every
-                shopper. Built for customers and admins alike.
-              </p>
-              <div className="hero-actions">
-                <button className="cta">Browse Products</button>
-                <button className="ghost">Learn More</button>
-              </div>
-              <div className="stats">
-                <div>
-                  <strong>40K+</strong>
-                  <span>Active shoppers</span>
-                </div>
-                <div>
-                  <strong>2.5K</strong>
-                  <span>Verified sellers</span>
-                </div>
-                <div>
-                  <strong>24/7</strong>
-                  <span>Support</span>
-                </div>
-              </div>
-            </div>
-            <div className="hero-card">
-              <h3>Trending bundles</h3>
-              <ul>
-                <li>
-                  <span>Smart home starter kit</span>
-                  <strong>$249</strong>
-                </li>
-                <li>
-                  <span>Eco essentials</span>
-                  <strong>$89</strong>
-                </li>
-                <li>
-                  <span>Streetwear favorites</span>
-                  <strong>$129</strong>
-                </li>
-              </ul>
-              <button className="cta full">View all bundles</button>
-            </div>
-          </section>
-
-          <section id="collections" className="collections">
-            <h2>Collections for every shopper</h2>
-            <p>Curated experiences that scale from indie stores to multi-brand marketplaces.</p>
-            <div className="collection-grid">
-              <article>
-                <h3>Fashion & Lifestyle</h3>
-                <p>Drop-based merchandising, style boards, and influencer-ready lookbooks.</p>
-              </article>
-              <article>
-                <h3>Tech & Gadgets</h3>
-                <p>Warranty management, device protection, and real-time inventory alerts.</p>
-              </article>
-              <article>
-                <h3>Home & Living</h3>
-                <p>Room bundles, AR previews, and guided decor inspirations.</p>
-              </article>
-              <article>
-                <h3>Beauty & Wellness</h3>
-                <p>Subscription plans, refill reminders, and ingredient transparency.</p>
-              </article>
-            </div>
-          </section>
-
-          <section id="benefits" className="benefits">
-            <div>
-              <h2>Why teams choose ShopSphere</h2>
-              <ul>
-                <li>Unified dashboard for orders, inventory, and customer insights.</li>
-                <li>Secure payments with fraud monitoring and instant payouts.</li>
-                <li>Automations for refunds, notifications, and loyalty rewards.</li>
-              </ul>
-            </div>
-            <div className="benefit-card">
-              <h3>Operational highlights</h3>
-              <div className="tag">Admin ready</div>
-              <p>Assign roles, approve new products, and track KPIs with real-time reporting.</p>
-              <div className="tag">Customer first</div>
-              <p>Saved carts, multi-address checkout, and smart recommendations.</p>
-            </div>
-          </section>
-
-          <section id="logins" className="logins">
-            <LoginCard
-              title="Admin Login"
-              description="Manage products, orders, and storefront analytics."
-              actionLabel="Sign in as Admin"
-              helperText="Need access?"
-              helperLink="Request admin invite"
-              role="admin"
-            />
-            <LoginCard
-              title="User Login"
-              description="Track your orders, manage wishlists, and redeem rewards."
-              actionLabel="Sign in as User"
-              helperText="New here?"
-              helperLink="Create an account"
-              role="user"
-            />
-          </section>
-        </main>
-
-        <footer>
-          <div>
-            <h3>ShopSphere</h3>
-            <p>Built for modern shopping experiences with secure admin and user access.</p>
-          </div>
-          <div className="footer-links">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Support</a>
-          </div>
-        </footer>
-      </>
+    const ProductCard = ({ product }) => (
+      <div className="product-card">
+        <img src={product.image} alt={product.name} />
+        <h4>{product.name}</h4>
+        <div className="product-price">
+          <span className="current-price">${product.price}</span>
+          {product.originalPrice && <span className="original-price">${product.originalPrice}</span>}
+          {product.discount && <span className="discount">{product.discount}% off</span>}
+        </div>
+        <div className="product-rating">
+          <span>⭐ {product.rating}</span>
+          <span>({product.reviews} reviews)</span>
+        </div>
+        <button className="add-to-cart">Add to Cart</button>
+      </div>
     );
+
+    const CategoryCard = ({ category }) => (
+      <div className="category-card">
+        <img src={category.image} alt={category.name} />
+        <h4>{category.name}</h4>
+      </div>
+    );
+
+    const App = () => {
+      const categories = [
+        { name: "Electronics", image: "https://via.placeholder.com/150?text=Electronics" },
+        { name: "Fashion", image: "https://via.placeholder.com/150?text=Fashion" },
+        { name: "Home & Kitchen", image: "https://via.placeholder.com/150?text=Home" },
+        { name: "Books", image: "https://via.placeholder.com/150?text=Books" },
+        { name: "Sports", image: "https://via.placeholder.com/150?text=Sports" },
+        { name: "Beauty", image: "https://via.placeholder.com/150?text=Beauty" },
+      ];
+
+      const featuredProducts = [
+        { id: 1, name: "Wireless Headphones", price: 99, originalPrice: 129, discount: 23, rating: 4.5, reviews: 1200, image: "https://via.placeholder.com/200?text=Headphones" },
+        { id: 2, name: "Smartphone", price: 699, originalPrice: 799, discount: 13, rating: 4.7, reviews: 850, image: "https://via.placeholder.com/200?text=Phone" },
+        { id: 3, name: "Laptop", price: 1299, originalPrice: 1499, discount: 13, rating: 4.6, reviews: 650, image: "https://via.placeholder.com/200?text=Laptop" },
+        { id: 4, name: "Sneakers", price: 89, originalPrice: 119, discount: 25, rating: 4.3, reviews: 950, image: "https://via.placeholder.com/200?text=Sneakers" },
+      ];
+
+      const deals = [
+        { id: 5, name: "Bluetooth Speaker", price: 49, originalPrice: 79, discount: 38, rating: 4.4, reviews: 600, image: "https://via.placeholder.com/200?text=Speaker" },
+        { id: 6, name: "Smart Watch", price: 199, originalPrice: 249, discount: 20, rating: 4.5, reviews: 750, image: "https://via.placeholder.com/200?text=Watch" },
+        { id: 7, name: "Gaming Mouse", price: 29, originalPrice: 39, discount: 26, rating: 4.2, reviews: 400, image: "https://via.placeholder.com/200?text=Mouse" },
+        { id: 8, name: "Tablet", price: 349, originalPrice: 449, discount: 22, rating: 4.6, reviews: 550, image: "https://via.placeholder.com/200?text=Tablet" },
+      ];
+
+      return (
+        <>
+          <header className="site-header">
+            <div className="brand">
+              <span className="logo">🛍️</span>
+              <div>
+                <h1>ShopSphere</h1>
+                <p>Shop everything you love, fast and secure.</p>
+              </div>
+            </div>
+            <nav>
+              <div className="search-bar">
+                <input type="text" placeholder="Search for products, brands and more..." />
+              </div>
+              <a href="#categories">Categories</a>
+              <a href="#deals">Deals</a>
+              <a href="#account">Account</a>
+              <div className="cart-icon">
+                <span>🛒</span>
+                <span className="cart-count">0</span>
+              </div>
+              <button className="cta">Login</button>
+            </nav>
+          </header>
+
+          <nav className="categories-nav">
+            <div className="categories-list">
+              {categories.map((cat, index) => (
+                <a key={index} href="#">{cat.name}</a>
+              ))}
+            </div>
+          </nav>
+
+          <main>
+            <section className="hero-banner">
+              <div className="banner-content">
+                <h2>Big Billion Days Sale!</h2>
+                <p>Up to 70% off on electronics, fashion, and more.</p>
+                <button className="cta">Shop Now</button>
+              </div>
+              <img src="https://via.placeholder.com/800x300?text=Sale+Banner" alt="Sale Banner" />
+            </section>
+
+            <section id="categories" className="categories-section">
+              <h2>Shop by Category</h2>
+              <div className="categories-grid">
+                {categories.map((cat, index) => (
+                  <CategoryCard key={index} category={cat} />
+                ))}
+              </div>
+            </section>
+
+            <section className="featured-products">
+              <h2>Featured Products</h2>
+              <div className="products-grid">
+                {featuredProducts.map(product => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </section>
+
+            <section id="deals" className="deals-section">
+              <h2>Today's Deals</h2>
+              <div className="products-grid">
+                {deals.map(product => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </section>
+
+            <section id="account" className="account-section">
+              <LoginCard
+                title="Login / Signup"
+                description="Get access to your orders, wishlist and recommendations."
+                actionLabel="Login"
+                helperText="New to ShopSphere?"
+                helperLink="Create an account"
+                role="user"
+              />
+            </section>
+          </main>
+
+          <footer>
+            <div>
+              <h3>ShopSphere</h3>
+              <p>India's leading e-commerce platform.</p>
+            </div>
+            <div className="footer-links">
+              <a href="#">About Us</a>
+              <a href="#">Careers</a>
+              <a href="#">Sell on ShopSphere</a>
+              <a href="#">Help Center</a>
+            </div>
+          </footer>
+        </>
+      );
+    };
 
     const root = ReactDOM.createRoot(document.getElementById("root"));
     root.render(<App />);
