@@ -11,7 +11,7 @@
 - [x] Update project name in package.json (ShopSphere to AgriMarket)
 - [x] Update console log message in server.js (ShopSphere to AgriMarket)
 - [x] Make minor CSS adjustments in public/styles.css if needed for theme consistency (no changes needed)
-- [ ] Test the website locally to ensure it loads correctly
+- [x] Test the website locally to ensure it loads correctly
 
 ## Progress
 - Started: [Date/Time]
