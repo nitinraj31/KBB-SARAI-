@@ -13,9 +13,10 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    const LoginCard = ({ title, description, actionLabel, helperText, helperLink, role }) => {
+    const LoginCard = ({ title, description, actionLabel, helperText, helperLink, role, onLogin, onRegister }) => {
       const [status, setStatus] = React.useState("");
       const [isLoading, setIsLoading] = React.useState(false);
+      const [isRegister, setIsRegister] = React.useState(false);
 
       const handleSubmit = async (event) => {
         event.preventDefault();
@@ -27,7 +28,8 @@
         setStatus("");
 
         try {
-          const response = await fetch("/api/auth/login", {
+          const endpoint = isRegister ? "/api/auth/register" : "/api/auth/login";
+          const response = await fetch(endpoint, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -36,7 +38,18 @@
           });
 
           const payload = await response.json();
-          setStatus(payload.message || "Signed in.");
+          if (response.ok) {
+            localStorage.setItem("token", payload.token);
+            localStorage.setItem("user", JSON.stringify(payload.user));
+            setStatus(isRegister ? "Account created successfully!" : "Signed in.");
+            if (isRegister) {
+              onRegister && onRegister(payload.user);
+            } else {
+              onLogin && onLogin(payload.user);
+            }
+          } else {
+            setStatus(payload.message || "Error occurred.");
+          }
         } catch (error) {
           setStatus("Unable to reach the server. Please try again.");
         } finally {
@@ -63,10 +76,10 @@
               <input name="password" type="password" placeholder="Enter your password" required />
             </label>
             <button className="cta full" type="submit" disabled={isLoading}>
-              {isLoading ? "Signing in..." : actionLabel}
+              {isLoading ? (isRegister ? "Creating account..." : "Signing in...") : (isRegister ? "Register" : actionLabel)}
             </button>
             <span className="helper">
-              {helperText} <a href="#">{helperLink}</a>
+              {helperText} <a href="#" onClick={() => setIsRegister(!isRegister)}>{isRegister ? "Already have an account? Login" : helperLink}</a>
             </span>
             {status && <span className="status">{status}</span>}
           </form>
@@ -74,20 +87,20 @@
       );
     };
 
-    const ProductCard = ({ product }) => (
+    const ProductCard = ({ product, onAddToCart }) => (
       <div className="product-card">
         <img src={product.image} alt={product.name} />
         <h4>{product.name}</h4>
         <div className="product-price">
           <span className="current-price">${product.price}</span>
-          {product.originalPrice && <span className="original-price">${product.originalPrice}</span>}
+          {product.original_price && <span className="original-price">${product.original_price}</span>}
           {product.discount && <span className="discount">{product.discount}% off</span>}
         </div>
         <div className="product-rating">
           <span>⭐ {product.rating}</span>
           <span>({product.reviews} reviews)</span>
         </div>
-        <button className="add-to-cart">Add to Cart</button>
+        <button className="add-to-cart" onClick={() => onAddToCart(product)}>Add to Cart</button>
       </div>
     );
 
@@ -99,28 +112,77 @@
     );
 
     const App = () => {
-      const categories = [
-        { name: "Seeds", image: "https://via.placeholder.com/150?text=Seeds" },
-        { name: "Fertilizers", image: "https://via.placeholder.com/150?text=Fertilizers" },
-        { name: "Tools", image: "https://via.placeholder.com/150?text=Tools" },
-        { name: "Machinery", image: "https://via.placeholder.com/150?text=Machinery" },
-        { name: "Produce", image: "https://via.placeholder.com/150?text=Produce" },
-        { name: "Livestock", image: "https://via.placeholder.com/150?text=Livestock" },
-      ];
+      const [categories, setCategories] = React.useState([]);
+      const [products, setProducts] = React.useState([]);
+      const [searchQuery, setSearchQuery] = React.useState("");
+      const [user, setUser] = React.useState(null);
+      const [cart, setCart] = React.useState([]);
 
-      const featuredProducts = [
-        { id: 1, name: "John Deere Tractor", price: 25000, originalPrice: 28000, discount: 11, rating: 4.8, reviews: 450, image: "https://via.placeholder.com/200?text=Tractor" },
-        { id: 2, name: "Organic Seed Pack", price: 25, originalPrice: 35, discount: 29, rating: 4.6, reviews: 320, image: "https://via.placeholder.com/200?text=Seeds" },
-        { id: 3, name: "NPK Fertilizer 50kg", price: 45, originalPrice: 55, discount: 18, rating: 4.4, reviews: 280, image: "https://via.placeholder.com/200?text=Fertilizer" },
-        { id: 4, name: "Farm Tools Set", price: 120, originalPrice: 150, discount: 20, rating: 4.5, reviews: 190, image: "https://via.placeholder.com/200?text=Tools" },
-      ];
+      React.useEffect(() => {
+        fetchCategories();
+        fetchProducts();
+        checkAuth();
+      }, []);
 
-      const deals = [
-        { id: 5, name: "Irrigation System", price: 299, originalPrice: 399, discount: 25, rating: 4.3, reviews: 180, image: "https://via.placeholder.com/200?text=Irrigation" },
-        { id: 6, name: "Pesticide Spray", price: 35, originalPrice: 50, discount: 30, rating: 4.1, reviews: 220, image: "https://via.placeholder.com/200?text=Spray" },
-        { id: 7, name: "Harvesting Tools", price: 85, originalPrice: 110, discount: 23, rating: 4.4, reviews: 150, image: "https://via.placeholder.com/200?text=Harvest" },
-        { id: 8, name: "Greenhouse Kit", price: 450, originalPrice: 600, discount: 25, rating: 4.6, reviews: 90, image: "https://via.placeholder.com/200?text=Greenhouse" },
-      ];
+      const fetchCategories = async () => {
+        try {
+          const response = await fetch('/api/categories');
+          const data = await response.json();
+          setCategories(data.categories || []);
+        } catch (error) {
+          console.error('Error fetching categories:', error);
+        }
+      };
+
+      const fetchProducts = async (query = "") => {
+        try {
+          const url = query ? `/api/products?search=${encodeURIComponent(query)}` : '/api/products';
+          const response = await fetch(url);
+          const data = await response.json();
+          setProducts(data.products || []);
+        } catch (error) {
+          console.error('Error fetching products:', error);
+        }
+      };
+
+      const checkAuth = () => {
+        const token = localStorage.getItem("token");
+        const userData = localStorage.getItem("user");
+        if (token && userData) {
+          setUser(JSON.parse(userData));
+        }
+      };
+
+      const handleSearch = (event) => {
+        event.preventDefault();
+        fetchProducts(searchQuery);
+      };
+
+      const handleLogin = (userData) => {
+        setUser(userData);
+      };
+
+      const handleRegister = (userData) => {
+        setUser(userData);
+      };
+
+      const addToCart = (product) => {
+        setCart(prevCart => {
+          const existing = prevCart.find(item => item.id === product.id);
+          if (existing) {
+            return prevCart.map(item =>
+              item.id === product.id
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+            );
+          } else {
+            return [...prevCart, { ...product, quantity: 1 }];
+          }
+        });
+      };
+
+      const featuredProducts = products.slice(0, 4);
+      const deals = products.filter(p => p.discount > 0).slice(0, 4);
 
       return (
         <>
@@ -133,17 +195,30 @@
               </div>
             </div>
             <nav>
-              <div className="search-bar">
-                <input type="text" placeholder="Search for seeds, tools, machinery and more..." />
-              </div>
+              <form className="search-bar" onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="Search for seeds, tools, machinery and more..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button type="submit">Search</button>
+              </form>
               <a href="#categories">Categories</a>
               <a href="#deals">Deals</a>
               <a href="#account">Account</a>
               <div className="cart-icon">
                 <span>🛒</span>
-                <span className="cart-count">0</span>
+                <span className="cart-count">{cart.reduce((sum, item) => sum + item.quantity, 0)}</span>
               </div>
-              <button className="cta">Login</button>
+              {user ? (
+                <div className="user-menu">
+                  <span>Welcome, {user.email}</span>
+                  <button onClick={() => { localStorage.clear(); setUser(null); }}>Logout</button>
+                </div>
+              ) : (
+                <button className="cta" onClick={() => window.location.hash = '#account'}>Login</button>
+              )}
             </nav>
           </header>
 
@@ -178,7 +253,7 @@
               <h2>Featured Products</h2>
               <div className="products-grid">
                 {featuredProducts.map(product => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
                 ))}
               </div>
             </section>
@@ -187,7 +262,7 @@
               <h2>Today's Deals</h2>
               <div className="products-grid">
                 {deals.map(product => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
                 ))}
               </div>
             </section>
@@ -200,6 +275,8 @@
                 helperText="New to AgriMarket?"
                 helperLink="Create an account"
                 role="user"
+                onLogin={handleLogin}
+                onRegister={handleRegister}
               />
             </section>
           </main>
